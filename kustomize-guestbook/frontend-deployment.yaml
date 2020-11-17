@@ -1,21 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-ui
+  name: frontend
+  labels:
+    app: guestbook
 spec:
   revisionHistoryLimit: 3
   progressDeadlineSeconds: 30
   selector:
     matchLabels:
-      app: guestbook-ui
+      app: guestbook
+      tier: frontend
+  replicas: 3
   template:
     metadata:
       labels:
-        app: guestbook-ui
+        app: guestbook
+        tier: frontend
     spec:
       containers:
-      - name: guestbook-ui
-        image: gcr.io/google-samples/gb-frontend:v4
+      - name: php-redis
+        image: gcr.io/google-samples/gb-frontend:v6
         resources:
           requests:
             cpu: 100m
